@@ -35,25 +35,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.connectMongo = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
-const connect_1 = require("./mongodb/connect");
-const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-const PORT = process.env.PORT || 3030;
 dotenv.config();
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
+const MONGO_URI = process.env.MONGO_URI;
+if (!MONGO_URI) {
+    throw new Error('Mongodb url environment variable not set');
+}
+console.log('MONGO_URL:', MONGO_URI);
+const connectMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, connect_1.connectMongo)();
+        mongoose_1.default.set('strictQuery', false);
+        yield mongoose_1.default.connect(MONGO_URI);
+        console.log('%cMongoDB connected', 'color:green');
     }
-    catch (err) {
-        console.log('Could not connect to MongoDB');
-        console.error(err);
+    catch (error) {
+        console.log(error);
     }
-    app.listen(PORT, () => {
-        console.log(`Server started at ${PORT}`);
-    });
 });
-startServer();
+exports.connectMongo = connectMongo;
