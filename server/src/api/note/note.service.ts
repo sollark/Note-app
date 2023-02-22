@@ -27,4 +27,23 @@ const getNote = async (noteId: String) => {
   }
 }
 
-export const noteService = { query, addNote, getNote }
+const updateNote = async (noteId: String, note: Note) => {
+  try {
+    const updatedNote = await noteModel.findByIdAndUpdate(noteId, note, {
+      new: true,
+    })
+    return updatedNote
+  } catch (error) {
+    throw error
+  }
+}
+
+const deleteNote = async (noteId: String) => {
+  try {
+    await noteModel.findByIdAndDelete(noteId)
+  } catch (error) {
+    throw error
+  }
+}
+
+export const noteService = { query, addNote, getNote, updateNote, deleteNote }

@@ -41,14 +41,13 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
-    throw new Error('Mongodb url environment variable not set');
+    throw new Error('Database url environment variable not set');
 }
-console.log('MONGO_URL:', MONGO_URI);
 const connectMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         mongoose_1.default.set('strictQuery', false);
         yield mongoose_1.default.connect(MONGO_URI);
-        console.log('%cMongoDB connected', 'color:green');
+        console.log('Database connected');
     }
     catch (error) {
         console.log(error);
