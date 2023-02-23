@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import Button from 'react-bootstrap/Button'
-import { Note } from './models/note'
+import { Note } from './cmps/Note'
+import { Note as NoteModel } from './models/note'
 
 function App() {
-  const [notes, setNotes] = useState<Note[]>([])
+  const [notes, setNotes] = useState<NoteModel[]>([])
 
   useEffect(() => {
     async function loadNotes() {
@@ -21,7 +21,13 @@ function App() {
     loadNotes()
   }, [])
 
-  return <div className='App'>{JSON.stringify(notes)}</div>
+  return (
+    <div className='App'>
+      {notes.map((note) => (
+        <Note note={note} key={note._id} />
+      ))}
+    </div>
+  )
 }
 
 export default App
