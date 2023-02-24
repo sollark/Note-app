@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Note } from './cmps/Note'
 import { Note as NoteModel } from './models/note'
+import { noteService } from './services/note.service'
 import styles from './styles/pages/NotePage.module.css'
 
 function App() {
@@ -10,10 +11,7 @@ function App() {
   useEffect(() => {
     async function loadNotes() {
       try {
-        const response = await fetch('http://localhost:3030/api/note', {
-          method: 'GET',
-        })
-        const data = await response.json()
+        const data = await noteService.query()
         setNotes(data)
       } catch (error) {
         console.log('Error fetching notes', error)
