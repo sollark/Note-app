@@ -1,0 +1,17 @@
+.noteCard {
+  background-color: var(--clr-primary);
+  color: var(--clr-text-primary-dark);
+}
+
+.noteBody {
+  overflow: hidden;
+}
+
+.noteText {
+  white-space: pre-line;
+}
+
+.noteDate {
+  font-size: 14px;
+  color: var(--clr-text-secondaty-dark);
+}

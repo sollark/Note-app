@@ -1,19 +1,27 @@
+import styles from '../styles/cmps/Note.module.css'
 import { Card } from 'react-bootstrap'
 import { Note as NoteModel } from '../models/note'
+import { formatDate, formatTime } from '../utils/formatDate'
 
 interface INote {
   note: NoteModel
+  className?: string
 }
 
-export function Note({ note }: INote) {
+export function Note({ note, className }: INote) {
   const { title, text, createdAt } = note
   return (
-    <Card>
-      <Card.Body>
+    <Card className={`${styles.noteCard} ${className}`}>
+      <Card.Body className={styles.cardBody}>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>{text}</Card.Text>
-        <Card.Text>{new Date(createdAt).toLocaleDateString()}</Card.Text>
+        <Card.Text className={`limited-text ${styles.noteText}`}>
+          {text}
+        </Card.Text>
       </Card.Body>
+      <Card.Footer className={`flex space-between ${styles.noteDate}`}>
+        <span> {`Created at: ${formatDate(createdAt)}`}</span>
+        <span>{formatTime(createdAt)}</span>
+      </Card.Footer>
     </Card>
   )
 }

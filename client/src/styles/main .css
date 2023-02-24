@@ -9,6 +9,7 @@
 @import 'setup/font-face.css';
 @import 'setup/elements.css';
 @import 'setup/colors.css';
+@import 'setup/global.css';
 
 /* components  */
 @import 'cmps/body.css';
