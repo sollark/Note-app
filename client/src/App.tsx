@@ -18,6 +18,15 @@ function App() {
       }
     }
 
+    async function createNote() {
+      const newNote = await noteService.save({
+        title: 'New Note',
+        text: 'This is a new note',
+      })
+      if (newNote) setNotes((notes) => [newNote, ...notes])
+    }
+
+    // createNote()
     loadNotes()
   }, [])
 
