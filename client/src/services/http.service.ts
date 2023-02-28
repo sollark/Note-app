@@ -9,8 +9,6 @@ export const httpService = {
     return ajax(endpoint, 'GET')
   },
   post(endpoint: string, data: Data) {
-    console.log('data in post:', data)
-
     return ajax(endpoint, 'POST', data)
   },
   put(endpoint: string, data: Data) {

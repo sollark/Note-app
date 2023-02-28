@@ -16,6 +16,7 @@ export async function getNotes(req: Request, res: Response) {
 }
 
 export async function addNote(req: Request, res: Response) {
+  console.log('adding a note')
   const newNote: Note = req.body
   try {
     // add new note

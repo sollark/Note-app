@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Button, Col, Container, Row } from 'react-bootstrap'
+import { AddNoteDialog } from './cmps/AddNoteDialog'
 import { Note } from './cmps/Note'
 import { Note as NoteModel } from './models/note'
 import { noteService } from './services/note.service'
@@ -7,6 +8,7 @@ import styles from './styles/pages/NotePage.module.css'
 
 function App() {
   const [notes, setNotes] = useState<NoteModel[]>([])
+  const [showAddNoteDialog, setShowAddNoteDialog] = useState(false)
 
   useEffect(() => {
     async function loadNotes() {
@@ -18,20 +20,14 @@ function App() {
       }
     }
 
-    async function createNote() {
-      const newNote = await noteService.save({
-        title: 'New Note',
-        text: 'This is a new note',
-      })
-      if (newNote) setNotes((notes) => [newNote, ...notes])
-    }
-
-    // createNote()
     loadNotes()
   }, [])
 
   return (
     <Container>
+      <Button className='mb-4' onClick={() => setShowAddNoteDialog(true)}>
+        Add Note
+      </Button>
       <Row xs={1} md={2} lg={3} className='g-4'>
         {notes.map((note) => (
           <Col key={note._id}>
@@ -39,6 +35,15 @@ function App() {
           </Col>
         ))}
       </Row>
+      {showAddNoteDialog && (
+        <AddNoteDialog
+          onDismiss={() => setShowAddNoteDialog(false)}
+          onNoteSave={(newNote) => {
+            setShowAddNoteDialog(false)
+            setNotes([newNote, ...notes])
+          }}
+        />
+      )}
     </Container>
   )
 }
