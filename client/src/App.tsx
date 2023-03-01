@@ -23,6 +23,15 @@ function App() {
     loadNotes()
   }, [])
 
+  async function deleteNote(noteToDelete: NoteModel) {
+    try {
+      await noteService.remove(noteToDelete._id)
+      setNotes(notes.filter((note) => note._id !== noteToDelete._id))
+    } catch (error) {
+      console.log('Error deleting note', error)
+    }
+  }
+
   return (
     <Container>
       <Button className='mb-4' onClick={() => setShowAddNoteDialog(true)}>
@@ -31,7 +40,11 @@ function App() {
       <Row xs={1} md={2} lg={3} className='g-4'>
         {notes.map((note) => (
           <Col key={note._id}>
-            <Note note={note} className={styles.card} />
+            <Note
+              note={note}
+              className={styles.card}
+              onDeleteNote={deleteNote}
+            />
           </Col>
         ))}
       </Row>

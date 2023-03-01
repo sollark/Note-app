@@ -27,9 +27,9 @@ async function ajax(
   console.log('data in ajax:', data)
   try {
     let res = null
-    if (method === 'GET')
+    if (method === 'GET' || method === 'DELETE')
       res = await fetch(`${BASE_URL}${endpoint}`, { method })
-    else if (method === 'POST')
+    else
       res = await fetch(`${BASE_URL}${endpoint}`, {
         method,
         headers: {
@@ -37,11 +37,11 @@ async function ajax(
         },
         body: JSON.stringify(data),
       })
-    else
-      res = await fetch(`${BASE_URL}${endpoint}`, {
-        method,
-        body: JSON.stringify(data),
-      })
+    // else
+    //   res = await fetch(`${BASE_URL}${endpoint}`, {
+    //     method,
+    //     body: JSON.stringify(data),
+    //   })
 
     return await res.json()
   } catch (err: any) {

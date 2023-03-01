@@ -49,6 +49,7 @@ export async function getNote(req: Request, res: Response) {
 }
 
 export async function deleteNote(req: Request, res: Response) {
+  console.log('deleting a note')
   const noteId = req.params.id
   try {
     await noteService.deleteNote(noteId)
