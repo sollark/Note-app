@@ -3,11 +3,11 @@
   display: flex;
 }
 
-.flex.align-center {
+.align-center {
   align-items: center;
 }
 
-.flex.space-between {
+.space-between {
   justify-content: space-between;
 }
 

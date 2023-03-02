@@ -1,4 +1,4 @@
-import { NewNote, Note } from '../models/note'
+import { isNewNote, isNote, NewNote, Note } from '../models/note'
 import { httpService } from './http.service'
 
 const URL = 'note/'
@@ -15,11 +15,20 @@ async function query(): Promise<Note[]> {
   return await httpService.get(URL)
 }
 
-async function save(note: NewNote): Promise<Note | undefined> {
-  const response = await httpService.post(URL, note)
-  if (response.success) return response.data
+async function save(note: NewNote | Note): Promise<Note | undefined> {
+  if (isNewNote(note)) {
+    const response = await httpService.post(URL, note)
+    if (response.success) return response.data
 
-  console.log('Cannot save note:', response.message)
+    console.log('Cannot save note:', response.message)
+  }
+
+  if (isNote(note)) {
+    const response = await httpService.put(URL + note._id, note)
+    if (response.success) return response.data
+
+    console.log('Cannot update note:', response.message)
+  }
 }
 
 async function remove(noteId: string) {

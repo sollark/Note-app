@@ -8,12 +8,15 @@ interface INote {
   note: NoteModel
   className?: string
   onDeleteNote: (note: NoteModel) => void
+  onNoteClick: (note: NoteModel) => void
 }
 
-export function Note({ note, className, onDeleteNote }: INote) {
+export function Note({ note, className, onDeleteNote, onNoteClick }: INote) {
   const { title, text, createdAt } = note
   return (
-    <Card className={`${styles.noteCard} ${className}`}>
+    <Card
+      className={`${styles.noteCard} ${className}`}
+      onClick={() => onNoteClick(note)}>
       <Card.Body className={styles.cardBody}>
         <Card.Title className='flex align-center'>
           {title}

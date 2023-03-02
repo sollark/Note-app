@@ -28,6 +28,8 @@ export async function addNote(req: Request, res: Response) {
 }
 
 export async function updateNote(req: Request, res: Response) {
+  console.log('updating a note')
+
   const note: Note = req.body
   const noteId = req.params.id
   try {
