@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 import { NoteDialog } from './cmps/NoteDialog'
 import { Note } from './cmps/Note'
 import { Note as NoteModel } from './models/note'
@@ -11,14 +11,22 @@ function App() {
   const [notes, setNotes] = useState<NoteModel[]>([])
   const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null)
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     async function loadNotes() {
       try {
+        setError(false)
+        setLoading(true)
+
         const data = await noteService.query()
         setNotes(data)
       } catch (error) {
         console.log('Error fetching notes', error)
+        setError(true)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -34,24 +42,42 @@ function App() {
     }
   }
 
+  const notesGrid = (
+    <Row xs={1} md={2} lg={3} className='g-4'>
+      {notes.map((note) => (
+        <Col key={note._id}>
+          <Note
+            note={note}
+            className={styles.card}
+            onDeleteNote={deleteNote}
+            onNoteClick={setNoteToEdit}
+          />
+        </Col>
+      ))}
+    </Row>
+  )
   return (
     <Container>
       <Button className='mb-4' onClick={() => setShowAddNoteDialog(true)}>
         <FaPlus />
         <span> Add Note</span>
       </Button>
-      <Row xs={1} md={2} lg={3} className='g-4'>
-        {notes.map((note) => (
-          <Col key={note._id}>
-            <Note
-              note={note}
-              className={styles.card}
-              onDeleteNote={deleteNote}
-              onNoteClick={setNoteToEdit}
-            />
-          </Col>
-        ))}
-      </Row>
+
+      {/* Loading spinner  */}
+      {loading && (
+        <div
+          style={{ height: '100%', width: '100%' }}
+          className='place-items-center'>
+          <Spinner animation='border' variant='primary' />
+        </div>
+      )}
+      {/* Error message  */}
+      {error && <p>Something went wrong</p>}
+
+      {/* Notes  */}
+      {!loading && !error && notes.length ? notesGrid : <p>No notes</p>}
+
+      {/* Modal to create a new note */}
       {showAddNoteDialog && (
         <NoteDialog
           onDismiss={() => setShowAddNoteDialog(false)}
@@ -61,6 +87,8 @@ function App() {
           }}
         />
       )}
+
+      {/* Modal to edit an existing note */}
       {noteToEdit && (
         <NoteDialog
           noteToEdit={noteToEdit}
