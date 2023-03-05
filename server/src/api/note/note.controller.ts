@@ -19,8 +19,8 @@ export async function addNote(req: Request, res: Response) {
   console.log('adding a note')
   const newNote: Note = req.body
   try {
-    const addNote = await noteService.addNote(newNote)
-    res.status(200).send({ success: true, data: addNote })
+    const addedNote = await noteService.addNote(newNote)
+    res.status(200).send({ success: true, data: addedNote })
   } catch (error) {
     res.status(400).send({ success: false, message: 'Could not add note' })
   }
