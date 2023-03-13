@@ -9,10 +9,19 @@ const addUser = async (user: User) => {
   }
 }
 
-const getUser = async (userName: String) => {
+const getUserByUsername = async (userName: String) => {
   try {
-    const user = await userModel.findOne({ username: userName })
-    return user
+    const existingUser = await userModel.findOne({ username: userName })
+    return existingUser
+  } catch (error) {
+    throw error
+  }
+}
+
+const getUserByEmail = async (email: String) => {
+  try {
+    const existingUser = await userModel.findOne({ email })
+    return existingUser
   } catch (error) {
     throw error
   }
@@ -37,4 +46,10 @@ const deleteUser = async (userId: String) => {
   }
 }
 
-export const userService = { addUser, getUser, updateUser, deleteUser }
+export const userService = {
+  addUser,
+  getUserByUsername,
+  getUserByEmail,
+  updateUser,
+  deleteUser,
+}

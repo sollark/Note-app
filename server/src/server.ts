@@ -1,22 +1,21 @@
 import path from 'path'
-// import { fileURLToPath, pathToFileURL } from 'url'
 import cors from 'cors'
 import express from 'express'
 import { connectMongo } from './mongodb/connect'
+import MongoStore from 'connect-mongo'
 
-// Routes
+// import routes
 import { noteRoutes } from './api/note/note.routes'
+import { userRoutes } from './api/user/user.routes'
 
 // Environment variables
 import * as dotenv from 'dotenv'
+import session from 'express-session'
 dotenv.config()
 const PORT = process.env.PORT || 3030
 const NODE_ENV = process.env.NODE_ENV || 'development'
-
-// Path compatible with CommonJS ( I dont know why it is working, it takes __dirname from somewhere )
-console.log('__dirname:', __dirname)
-// const __dirname = path.dirname(pathToFileURL(__filename).toString())
-// const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const SESSION_SECRET = process.env.SESSION_SECRET || 'secret'
+const MONGO_URI = process.env.MONGO_URI
 
 const app = express()
 app.use(express.json())
@@ -34,10 +33,29 @@ if (NODE_ENV === 'production') {
 }
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Server is up')
 })
 
+// Middleware
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60, // for testing purposes
+      // maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
+    rolling: true,
+    store: MongoStore.create({
+      mongoUrl: MONGO_URI,
+    }),
+  })
+)
+
+// Routes
 app.use('/api/note', noteRoutes)
+app.use('/api/user', userRoutes)
 
 const startServer = async () => {
   try {
