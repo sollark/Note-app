@@ -27,6 +27,17 @@ const getUserByEmail = async (email: String) => {
   }
 }
 
+const getUserWithPassword = async (userName: String) => {
+  try {
+    const existingUser = await userModel
+      .findOne({ username: userName })
+      .select('+password')
+    return existingUser
+  } catch (error) {
+    throw error
+  }
+}
+
 const updateUser = async (userId: String, user: User) => {
   try {
     const updatedUser = await userModel.findByIdAndUpdate(userId, user, {
@@ -50,6 +61,7 @@ export const userService = {
   addUser,
   getUserByUsername,
   getUserByEmail,
+  getUserWithPassword,
   updateUser,
   deleteUser,
 }

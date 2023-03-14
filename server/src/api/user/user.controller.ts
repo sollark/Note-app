@@ -51,14 +51,32 @@ export async function signup(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const user: UserLogin = req.body
 
-  try {
-    const loggedInUser = await userService.getUserByUsername(user.username)
+  if (!user.username || !user.password)
+    return res
+      .status(400)
+      .send({ success: false, message: 'Missing parameters.' })
 
+  try {
+    const loggedInUser = await userService.getUserWithPassword(user.username)
     if (!loggedInUser) {
-      res.status(401).send({ success: false, message: 'Wrong username' })
-    } else if (loggedInUser.password !== user.password) {
-      res.status(401).send({ success: false, message: 'Wrong password' })
-    } else res.status(200).send({ success: true, data: loggedInUser })
+      return res
+        .status(401)
+        .send({ success: false, message: 'Invalid credentials' })
+    }
+
+    const passwordMatch = await bcrypt.compare(
+      user.password,
+      loggedInUser.password
+    )
+    if (!passwordMatch) {
+      return res
+        .status(401)
+        .send({ success: false, message: 'Invalid credentials' })
+    }
+
+    res
+      .status(200)
+      .send({ success: true, data: { username: loggedInUser.username } })
   } catch (error) {
     res.status(400).send({ success: false, message: 'Could not login' })
   }

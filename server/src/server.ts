@@ -1,8 +1,9 @@
 import path from 'path'
 import cors from 'cors'
 import express from 'express'
-import { connectMongo } from './mongodb/connect'
 import MongoStore from 'connect-mongo'
+import session from 'express-session'
+import { connectMongo } from './mongodb/connect'
 
 // import routes
 import { noteRoutes } from './api/note/note.routes'
@@ -10,7 +11,6 @@ import { userRoutes } from './api/user/user.routes'
 
 // Environment variables
 import * as dotenv from 'dotenv'
-import session from 'express-session'
 dotenv.config()
 const PORT = process.env.PORT || 3030
 const NODE_ENV = process.env.NODE_ENV || 'development'
