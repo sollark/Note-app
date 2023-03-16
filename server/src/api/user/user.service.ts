@@ -1,9 +1,19 @@
+import { Types } from 'mongoose'
 import userModel, { User } from '../../mongodb/models/user'
 
 const addUser = async (user: User) => {
   try {
     const newUser = await userModel.create(user)
     return newUser
+  } catch (error) {
+    throw error
+  }
+}
+
+const getUserById = async (userId: Types.ObjectId) => {
+  try {
+    const existingUser = await userModel.findById(userId)
+    return existingUser
   } catch (error) {
     throw error
   }
@@ -59,6 +69,7 @@ const deleteUser = async (userId: String) => {
 
 export const userService = {
   addUser,
+  getUserById,
   getUserByUsername,
   getUserByEmail,
   getUserWithPassword,
