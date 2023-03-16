@@ -28,10 +28,14 @@ async function ajax(
   try {
     let res = null
     if (method === 'GET' || method === 'DELETE')
-      res = await fetch(`${BASE_URL}${endpoint}`, { method })
+      res = await fetch(`${BASE_URL}${endpoint}`, {
+        method,
+        credentials: 'include',
+      })
     else
       res = await fetch(`${BASE_URL}${endpoint}`, {
         method,
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

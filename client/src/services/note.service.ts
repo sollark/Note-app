@@ -7,7 +7,6 @@ const URL = 'note/'
 export const noteService = {
   query,
   save,
-  //   get,
   remove,
 }
 
@@ -15,7 +14,7 @@ async function query(): Promise<Note[]> {
   return await httpService.get(URL)
 }
 
-async function save(note: NewNote | Note): Promise<Note | undefined> {
+async function save(note: NewNote | Note): Promise<Note | void> {
   if (isNewNote(note)) {
     const response = await httpService.post(URL, note)
     if (response.success) return response.data
