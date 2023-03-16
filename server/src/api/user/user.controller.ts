@@ -81,3 +81,16 @@ export async function login(req: Request, res: Response) {
     res.status(400).send({ success: false, message: 'Could not login' })
   }
 }
+
+export async function logout(req: Request, res: Response) {
+  req.session.destroy((err) => {
+    if (err) {
+      return res
+        .status(400)
+        .send({ success: false, message: 'Could not logout' })
+    }
+
+    res.clearCookie('connect.sid')
+    res.status(200).send({ success: true, message: 'Logged out' })
+  })
+}
