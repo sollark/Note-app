@@ -6,6 +6,8 @@ import { Note as NoteModel } from './models/note'
 import { noteService } from './services/note.service'
 import { FaPlus } from 'react-icons/fa'
 import styles from './styles/pages/NotePage.module.css'
+import { SignUpDialog } from './cmps/SignUpDialog'
+import LoginDialog from './cmps/LoginDialog'
 
 function App() {
   const [notes, setNotes] = useState<NoteModel[]>([])
@@ -102,6 +104,13 @@ function App() {
             )
           }}
         />
+      )}
+      {false && (
+        <SignUpDialog onDismiss={() => {}} onSignUpSuccessful={() => {}} />
+      )}
+
+      {false && (
+        <LoginDialog onDismiss={() => {}} onLoginSuccessful={() => {}} />
       )}
     </Container>
   )

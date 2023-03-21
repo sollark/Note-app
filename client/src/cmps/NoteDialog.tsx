@@ -2,6 +2,7 @@ import { Button, Form, Modal } from 'react-bootstrap'
 import { NewNote as NewNoteModal, Note as NoteModel } from '../models/note'
 import { useForm } from 'react-hook-form'
 import { noteService } from '../services/note.service'
+import TextInput from './form/TextInput'
 
 interface NoteDialogProps {
   noteToEdit?: NoteModel
@@ -41,6 +42,7 @@ export function NoteDialog({
       console.log('Error saving note', error)
     }
   }
+
   return (
     <Modal show onHide={onDismiss}>
       <Modal.Header closeButton>
@@ -48,27 +50,24 @@ export function NoteDialog({
       </Modal.Header>
       <Modal.Body>
         <Form id='NoteForm' onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group className='mb-3'>
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Enter title'
-              isInvalid={!!errors.title}
-              {...register('title', { required: 'Required' })}
-            />
-            <Form.Control.Feedback type='invalid'>
-              {errors.title?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className='mb-3'>
-            <Form.Label>Text</Form.Label>
-            <Form.Control
-              as='textarea'
-              placeholder='Write a note'
-              rows={5}
-              {...register('text')}
-            />
-          </Form.Group>
+          <TextInput
+            name='title'
+            label='Title'
+            type='text'
+            placeholder='Enter title'
+            register={register}
+            registerOptions={{ required: 'Required' }}
+            error={errors.title}
+          />
+
+          <TextInput
+            name='text'
+            label='Text'
+            as='textarea'
+            placeholder='Write a note'
+            rows={5}
+            register={register}
+          />
         </Form>
       </Modal.Body>
       <Modal.Footer>

@@ -4,7 +4,7 @@ import { httpService } from './http.service'
 const URL = 'user/'
 
 //  exports
-export const noteService = {
+export const userService = {
   login,
   signup,
 }

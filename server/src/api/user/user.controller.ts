@@ -14,6 +14,7 @@ interface UserLogin {
 }
 
 export async function signup(req: Request, res: Response) {
+  console.log('Signup request body:', req.body, 'session:', req.session, '')
   const user: UserSignup = req.body
 
   if (!user.username || !user.password || !user.email)

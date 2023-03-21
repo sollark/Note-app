@@ -53,9 +53,21 @@ app.use(
   })
 )
 
+// got request
+app.use(function (req, res, next) {
+  console.log('Request received at ' + Date.now())
+  next()
+})
+
 // Routes
 app.use('/api/note', noteRoutes)
 app.use('/api/user', userRoutes)
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  console.log('404')
+  next()
+})
 
 const startServer = async () => {
   try {
