@@ -8,6 +8,7 @@ import { FaPlus } from 'react-icons/fa'
 import styles from './styles/pages/NotePage.module.css'
 import { SignUpDialog } from './cmps/SignUpDialog'
 import LoginDialog from './cmps/LoginDialog'
+import { NavBar } from './cmps/NavBar'
 
 function App() {
   const [notes, setNotes] = useState<NoteModel[]>([])
@@ -59,60 +60,68 @@ function App() {
     </Row>
   )
   return (
-    <Container>
-      <Button className='mb-4' onClick={() => setShowAddNoteDialog(true)}>
-        <FaPlus />
-        <span> Add Note</span>
-      </Button>
+    <>
+      <NavBar
+        loggedInUser={null}
+        onLogin={() => {}}
+        onLogout={() => {}}
+        onSignup={() => {}}
+      />
+      <Container>
+        <Button className='mb-4' onClick={() => setShowAddNoteDialog(true)}>
+          <FaPlus />
+          <span> Add Note</span>
+        </Button>
 
-      {/* Loading spinner  */}
-      {loading && (
-        <div
-          style={{ height: '100%', width: '100%' }}
-          className='place-items-center'>
-          <Spinner animation='border' variant='primary' />
-        </div>
-      )}
-      {/* Error message  */}
-      {error && <p>Something went wrong</p>}
+        {/* Loading spinner  */}
+        {loading && (
+          <div
+            style={{ height: '100%', width: '100%' }}
+            className='place-items-center'>
+            <Spinner animation='border' variant='primary' />
+          </div>
+        )}
+        {/* Error message  */}
+        {error && <p>Something went wrong</p>}
 
-      {/* Notes  */}
-      {!loading && !error && notes.length ? notesGrid : <p>No notes</p>}
+        {/* Notes  */}
+        {!loading && !error && notes.length ? notesGrid : <p>No notes</p>}
 
-      {/* Modal to create a new note */}
-      {showAddNoteDialog && (
-        <NoteDialog
-          onDismiss={() => setShowAddNoteDialog(false)}
-          onNoteSave={(newNote) => {
-            setShowAddNoteDialog(false)
-            setNotes([newNote, ...notes])
-          }}
-        />
-      )}
+        {/* Modal to create a new note */}
+        {showAddNoteDialog && (
+          <NoteDialog
+            onDismiss={() => setShowAddNoteDialog(false)}
+            onNoteSave={(newNote) => {
+              setShowAddNoteDialog(false)
+              setNotes([newNote, ...notes])
+            }}
+          />
+        )}
 
-      {/* Modal to edit an existing note */}
-      {noteToEdit && (
-        <NoteDialog
-          noteToEdit={noteToEdit}
-          onDismiss={() => setNoteToEdit(null)}
-          onNoteSave={(updatedNote) => {
-            setNoteToEdit(null)
-            setNotes(
-              notes.map((note) =>
-                note._id === updatedNote._id ? updatedNote : note
+        {/* Modal to edit an existing note */}
+        {noteToEdit && (
+          <NoteDialog
+            noteToEdit={noteToEdit}
+            onDismiss={() => setNoteToEdit(null)}
+            onNoteSave={(updatedNote) => {
+              setNoteToEdit(null)
+              setNotes(
+                notes.map((note) =>
+                  note._id === updatedNote._id ? updatedNote : note
+                )
               )
-            )
-          }}
-        />
-      )}
-      {false && (
-        <SignUpDialog onDismiss={() => {}} onSignUpSuccessful={() => {}} />
-      )}
+            }}
+          />
+        )}
+        {false && (
+          <SignUpDialog onDismiss={() => {}} onSignUpSuccessful={() => {}} />
+        )}
 
-      {false && (
-        <LoginDialog onDismiss={() => {}} onLoginSuccessful={() => {}} />
-      )}
-    </Container>
+        {false && (
+          <LoginDialog onDismiss={() => {}} onLoginSuccessful={() => {}} />
+        )}
+      </Container>{' '}
+    </>
   )
 }
 
