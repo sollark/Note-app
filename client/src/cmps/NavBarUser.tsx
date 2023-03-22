@@ -24,8 +24,6 @@ export function NavBarUser({
     }
   }
 
-  async function onSignupClick() {}
-  async function onLoginClick() {}
   return (
     <>
       {user ? (
@@ -40,16 +38,10 @@ export function NavBarUser({
         </div>
       ) : (
         <div>
-          <Button
-            className='ms-1'
-            variant='outline-light'
-            onClick={onSignupClick}>
+          <Button className='ms-1' variant='outline-light' onClick={onSignup}>
             Sign up
           </Button>
-          <Button
-            className='ms-1'
-            variant='outline-light'
-            onClick={onLoginClick}>
+          <Button className='ms-1' variant='outline-light' onClick={onLogin}>
             Log in
           </Button>
         </div>

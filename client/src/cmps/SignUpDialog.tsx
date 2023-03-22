@@ -20,7 +20,10 @@ export function SignUpDialog({ onDismiss, onSignUpSuccessful }: SignUpProps) {
   async function onSubmit(credentials: UserSignup) {
     try {
       const user = await userService.signup(credentials)
-      if (user) onSignUpSuccessful(user)
+      if (user) {
+        onSignUpSuccessful(user)
+        onDismiss()
+      }
     } catch (error) {
       console.log('Error signing up', error)
     }

@@ -36,7 +36,13 @@ app.get('/', (req, res) => {
   res.send('Server is up')
 })
 
-// Middleware
+// Middleware request
+app.use(function (req, res, next) {
+  console.log('Request received at ' + Date.now())
+  next()
+})
+
+// Middleware session
 app.use(
   session({
     secret: SESSION_SECRET,
@@ -53,20 +59,14 @@ app.use(
   })
 )
 
-// got request
-app.use(function (req, res, next) {
-  console.log('Request received at ' + Date.now())
-  next()
-})
-
 // Routes
 app.use('/api/note', noteRoutes)
 app.use('/api/user', userRoutes)
 
-// catch 404 and forward to error handler
+// 404
 app.use(function (req, res, next) {
   console.log('404')
-  next()
+  res.status(404).send('<h1>Page not found on the server</h1>')
 })
 
 const startServer = async () => {

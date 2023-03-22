@@ -9,7 +9,7 @@ interface LoginDialogProps {
   onLoginSuccessful: (user: User) => void
 }
 
-export default function LoginDialog({
+export function LoginDialog({
   onDismiss,
   onLoginSuccessful,
 }: LoginDialogProps) {
@@ -22,7 +22,10 @@ export default function LoginDialog({
   async function onSubmit(credentials: UserLogin) {
     try {
       const user = await userService.login(credentials)
-      if (user) onLoginSuccessful(user)
+      if (user) {
+        onLoginSuccessful(user)
+        onDismiss()
+      }
     } catch (error) {
       console.log('Error signing up', error)
     }

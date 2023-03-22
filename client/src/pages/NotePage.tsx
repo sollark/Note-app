@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import { Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 import { FaPlus } from 'react-icons/fa'
 import { Note } from '../cmps/Note'
-import { Note as NoteModel } from '../models/note'
-import { LoginDialog } from '../cmps/LoginDialog'
 import { NoteDialog } from '../cmps/NoteDialog'
-import { SignUpDialog } from '../cmps/SignUpDialog'
+import { Note as NoteModel } from '../models/note'
 import { noteService } from '../services/note.service'
 import styles from '../styles/pages/NotePage.module.css'
 
@@ -104,13 +102,6 @@ export default function NotePage() {
             )
           }}
         />
-      )}
-      {false && (
-        <SignUpDialog onDismiss={() => {}} onSignUpSuccessful={() => {}} />
-      )}
-
-      {false && (
-        <LoginDialog onDismiss={() => {}} onLoginSuccessful={() => {}} />
       )}
     </Container>
   )
