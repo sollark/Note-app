@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { LoginDialog } from './cmps/LoginDialog'
 import { NavBar } from './cmps/NavBar'
+import { LoginDialog } from './cmps/LoginDialog'
 import { SignUpDialog } from './cmps/SignUpDialog'
 import { User } from './models/user'
+import { userService } from './services/user.service'
 import NotePage from './pages/NotePage'
 import WelcomePage from './pages/WelcomePage'
-import { userService } from './services/user.service'
 
 function App() {
   const [user, setUser] = useState<User | null>(null)
@@ -17,9 +17,9 @@ function App() {
       const user = userService.getUser()
       setUser(user)
     }
-
     loadUser()
   }, [])
+
   return (
     <>
       <NavBar
@@ -28,7 +28,9 @@ function App() {
         onLogin={() => setShowLoginDialog(true)}
         onLogout={() => setUser(null)}
       />
+
       {user ? <NotePage /> : <WelcomePage />}
+
       {showSignUpDialog && (
         <SignUpDialog
           onDismiss={() => setShowSignUpDialog(false)}

@@ -53,7 +53,6 @@ export function SignUpDialog({ onDismiss, onSignUpSuccessful }: SignUpProps) {
             registerOptions={{ required: 'Required' }}
             error={errors.email}
           />
-
           <TextInput
             name='password'
             label='Password'

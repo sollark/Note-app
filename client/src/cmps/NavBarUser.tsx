@@ -28,9 +28,9 @@ export function NavBarUser({
     <>
       {user ? (
         <div>
-          <Navbar.Text className='mr-2'>Hello, {user.username}</Navbar.Text>
+          <Navbar.Text className='mr-2'>Hello, {user.username} </Navbar.Text>
           <Button
-            className='ms-1'
+            className='ms-2'
             variant='outline-light'
             onClick={onLogoutClick}>
             Log out

@@ -47,10 +47,11 @@ app.use(
   session({
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-      // maxAge: 1000 * 60, // for testing purposes
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      maxAge: 1000, // for testing purposes
+      // maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      secure: true,
     },
     rolling: true,
     store: MongoStore.create({
