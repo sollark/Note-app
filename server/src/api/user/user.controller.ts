@@ -75,6 +75,8 @@ export async function login(req: Request, res: Response) {
         .send({ success: false, message: 'Invalid credentials' })
     }
 
+    req.session.userId = loggedInUser._id
+
     res
       .status(200)
       .send({ success: true, data: { username: loggedInUser.username } })

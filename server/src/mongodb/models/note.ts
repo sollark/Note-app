@@ -4,6 +4,7 @@ const noteSchema = new Schema({
   title: { type: String, required: true },
   text: { type: String },
   createdAt: { type: Number, default: Date.now() },
+  createdBy: { type: Schema.Types.ObjectId, required: true },
 })
 
 // Create a type for the schema

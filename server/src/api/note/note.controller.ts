@@ -1,14 +1,12 @@
-import { noteService } from './note.service'
 import { Request, Response } from 'express'
 import { Note } from '../../mongodb/models/note'
+import { noteService } from './note.service'
 
 export async function getNotes(req: Request, res: Response) {
-  const filterBy = req.query
-  console.log('filterBy:', filterBy)
-  console.log('getNotes')
-
+  // const filterBy = req.query
   try {
-    const notes = await noteService.query()
+    const userId = req.session.userId!
+    const notes = await noteService.query(userId)
     res.json(notes)
   } catch (error) {
     res.status(400).send({ err: 'Failed to get stays' })
@@ -16,8 +14,8 @@ export async function getNotes(req: Request, res: Response) {
 }
 
 export async function addNote(req: Request, res: Response) {
-  console.log('adding a note')
-  const newNote: Note = req.body
+  const newNote: Note = { ...req.body, createdBy: req.session.userId }
+
   try {
     const addedNote = await noteService.addNote(newNote)
     res.status(200).send({ success: true, data: addedNote })
@@ -27,8 +25,6 @@ export async function addNote(req: Request, res: Response) {
 }
 
 export async function updateNote(req: Request, res: Response) {
-  console.log('updating a note')
-
   const note: Note = req.body
   const noteId = req.params.id
   try {
@@ -50,7 +46,6 @@ export async function getNote(req: Request, res: Response) {
 }
 
 export async function deleteNote(req: Request, res: Response) {
-  console.log('deleting a note')
   const noteId = req.params.id
   try {
     await noteService.deleteNote(noteId)

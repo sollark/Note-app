@@ -1,8 +1,9 @@
+import mongoose from 'mongoose'
 import noteModel, { Note } from '../../mongodb/models/note'
 
-const query = async () => {
+const query = async (userId: mongoose.Types.ObjectId) => {
   try {
-    const notes = await noteModel.find({})
+    const notes = await noteModel.find({ createdBy: userId })
     return notes
   } catch (error) {
     throw error

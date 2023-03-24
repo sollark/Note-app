@@ -11,6 +11,7 @@ import { userRoutes } from './api/user/user.routes'
 
 // Environment variables
 import * as dotenv from 'dotenv'
+import { requireAuth } from './middleware/requireAuth.middleware'
 dotenv.config()
 const PORT = process.env.PORT || 3030
 const NODE_ENV = process.env.NODE_ENV || 'development'
@@ -36,12 +37,6 @@ app.get('/', (req, res) => {
   res.send('Server is up')
 })
 
-// Middleware request
-app.use(function (req, res, next) {
-  console.log('Request received at ' + Date.now())
-  next()
-})
-
 // Middleware session
 app.use(
   session({
@@ -49,9 +44,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000, // for testing purposes
-      // maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-      secure: true,
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
     rolling: true,
     store: MongoStore.create({
@@ -61,7 +54,7 @@ app.use(
 )
 
 // Routes
-app.use('/api/note', noteRoutes)
+app.use('/api/note', requireAuth, noteRoutes)
 app.use('/api/user', userRoutes)
 
 // 404

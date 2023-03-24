@@ -1,4 +1,5 @@
 import express from 'express'
+import { requireAuth } from '../../middleware/requireAuth.middleware'
 import {
   getNotes,
   addNote,
