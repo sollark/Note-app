@@ -1,7 +1,8 @@
 import { Button } from 'react-bootstrap'
+import background from '../assets/bg.jpg'
 
 const backgroundImage = {
-  backgroundImage: 'url(src/assets/bg.jpg)',
+  backgroundImage: `url(${background}})`,
   backgroundSize: 'cover',
   height: 'calc(100vh - 90px)',
 }
