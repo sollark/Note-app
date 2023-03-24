@@ -20,6 +20,17 @@ function App() {
     loadUser()
   }, [])
 
+  async function onTry() {
+    const guestUserCredentials = { username: 'guest', password: 'guest' }
+
+    try {
+      const guest = await userService.login(guestUserCredentials)
+      if (guest) setUser(guest)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <NavBar
@@ -29,7 +40,7 @@ function App() {
         onLogout={() => setUser(null)}
       />
 
-      {user ? <NotePage /> : <WelcomePage />}
+      {user ? <NotePage /> : <WelcomePage onTry={onTry} />}
 
       {showSignUpDialog && (
         <SignUpDialog
