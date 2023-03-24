@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { User } from '../models/user'
@@ -17,6 +18,8 @@ export function SignUpDialog({ onDismiss, onSignUpSuccessful }: SignUpProps) {
     formState: { errors, isSubmitting },
   } = useForm<UserSignup>()
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
   async function onSubmit(credentials: UserSignup) {
     try {
       const user = await userService.signup(credentials)
@@ -24,8 +27,8 @@ export function SignUpDialog({ onDismiss, onSignUpSuccessful }: SignUpProps) {
         onSignUpSuccessful(user)
         onDismiss()
       }
-    } catch (error) {
-      console.log('Error signing up', error)
+    } catch (error: any) {
+      setErrorMessage(error.message)
     }
   }
   return (
@@ -35,6 +38,7 @@ export function SignUpDialog({ onDismiss, onSignUpSuccessful }: SignUpProps) {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit(onSubmit)}>
+          {errorMessage && <p>{errorMessage}</p>}
           <TextInput
             name='username'
             label='Username'

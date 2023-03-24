@@ -27,8 +27,6 @@ export function NoteDialog({
   })
 
   async function onSubmit(input: NewNoteModal | NoteModel) {
-    console.log('Saving note', input)
-
     try {
       let noteResponse: NoteModel | void
       if (noteToEdit) {

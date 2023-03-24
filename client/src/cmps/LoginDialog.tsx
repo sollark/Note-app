@@ -1,5 +1,6 @@
-import { Button, Form, Modal } from 'react-bootstrap'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Alert, Button, Form, Modal } from 'react-bootstrap'
 import { User, UserLogin } from '../models/user'
 import { userService } from '../services/user.service'
 import TextInput from './form/TextInput'
@@ -19,6 +20,8 @@ export function LoginDialog({
     formState: { errors, isSubmitting },
   } = useForm<UserLogin>()
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
   async function onSubmit(credentials: UserLogin) {
     try {
       const user = await userService.login(credentials)
@@ -26,8 +29,8 @@ export function LoginDialog({
         onLoginSuccessful(user)
         onDismiss()
       }
-    } catch (error) {
-      console.log('Error signing up', error)
+    } catch (error: any) {
+      setErrorMessage(error.message)
     }
   }
 
@@ -38,6 +41,7 @@ export function LoginDialog({
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit(onSubmit)}>
+          {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
           <TextInput
             name='username'
             label='Username'

@@ -29,7 +29,8 @@ async function login(credentials: UserLogin): Promise<User | void> {
     _saveUser(user)
     return user
   }
-  console.log('Cannot login:', response.message)
+
+  throw new Error(response.message)
 }
 
 async function signup(credentials: UserSignup): Promise<User | void> {
@@ -39,7 +40,8 @@ async function signup(credentials: UserSignup): Promise<User | void> {
     _saveUser(user)
     return user
   }
-  console.log('Cannot signup:', response.message)
+
+  throw new Error(response.message)
 }
 
 async function logout() {

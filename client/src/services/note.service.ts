@@ -25,13 +25,11 @@ async function save(note: NewNote | Note): Promise<Note | void> {
   if (isNote(note)) {
     const response = await httpService.put(URL + note._id, note)
     if (response.success) return response.data
-
     console.log('Cannot update note:', response.message)
   }
 }
 
 async function remove(noteId: string) {
   const response = await httpService.delete(URL + noteId)
-  if (response.success) console.log(response.message)
-  else console.log('Cannot remove note:', response.message)
+  if (!response.success) console.log('Cannot remove note:', response.message)
 }
