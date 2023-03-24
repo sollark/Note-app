@@ -90,6 +90,9 @@ app.use(function (req, res, next) {
     console.log('404');
     res.status(404).send('<h1>Page not found on the server</h1>');
 });
+app.get('/**', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, 'public', 'index.html'));
+});
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, connect_1.connectMongo)();

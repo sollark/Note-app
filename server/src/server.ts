@@ -63,6 +63,10 @@ app.use(function (req, res, next) {
   res.status(404).send('<h1>Page not found on the server</h1>')
 })
 
+app.get('/**', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
+
 const startServer = async () => {
   try {
     await connectMongo()
