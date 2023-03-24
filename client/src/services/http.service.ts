@@ -26,14 +26,6 @@ async function ajax(
   method: HttpMethod = 'GET',
   data: Data = null
 ) {
-  console.log(
-    'ajax endpoint:',
-    endpoint,
-    ', data:',
-    data,
-    ', json:',
-    JSON.stringify(data)
-  )
   try {
     let res = null
     if (method === 'GET' || method === 'DELETE')
@@ -50,7 +42,7 @@ async function ajax(
         },
         body: JSON.stringify(data),
       })
-    console.log('response:', res)
+
     return await res.json()
   } catch (err: any) {
     console.log(

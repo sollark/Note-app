@@ -5,7 +5,6 @@ import { storageService } from './storage.service'
 const URL = 'user/'
 const STORAGE_KEY = 'user'
 
-//  exports
 export const userService = {
   login,
   signup,
@@ -45,8 +44,6 @@ async function signup(credentials: UserSignup): Promise<User | void> {
 
 async function logout() {
   const response = await httpService.put(URL + 'logout', {})
-  if (response.success) {
-    _saveUser(null)
-    console.log(response.message)
-  } else console.log('Cannot logout:', response.message)
+  if (response.success) _saveUser(null)
+  else console.log('Cannot logout:', response.message)
 }
