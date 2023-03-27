@@ -7,8 +7,8 @@
   <a href="#key-features">Key Features</a> &#x2022;
   <a href="#usage">Usage</a> &#x2022;
   <a href="#screenshot">Screenshot</a> &#x2022;
-  
-  
+  <a href="#technologies">Technologies</a> &#x2022;
+  <a href="#services">Services</a> 
 </p>
 
 ## Key Features
@@ -20,4 +20,24 @@
 
 Log in on the website to get access to your notes.
 
+## Screenshot
 
+![screenshot](client/src/assets/screenshot.png)
+
+## Technologies
+- JavaScript
+- TypeScript
+
+### Frontend
+- Vite
+- Bootstrap
+- React
+
+### Backend
+- Express
+- Bcrypt, Express-session
+- Mongoose
+
+## Services
+- Mongo
+- Render
