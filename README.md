@@ -15,7 +15,7 @@
 
 ## Website
 
-Visit ![Note app](https://note-app-umq9.onrender.com)
+Visit [Note app](https://note-app-umq9.onrender.com)
 
 ![screenshot](client/src/assets/screenshot.png)
 
